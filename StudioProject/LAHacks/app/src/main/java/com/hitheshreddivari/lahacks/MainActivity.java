@@ -1,9 +1,14 @@
 package com.hitheshreddivari.lahacks;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +17,39 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        String[] tuts = new String[] {"Post data"};
+        ArrayAdapter<String> adpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tuts);
+        ListView lv = (ListView) findViewById(R.id.tutList);
+
+        lv.setAdapter(adpt);
+
+
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adptView, View view, int position,
+                                    long id) {
+
+                Intent i = null;
+                System.out.println("Position ["+position+"]");
+                switch (position) {
+                    case 0:
+                        i = new Intent(MainActivity.this, PostActivity.class);
+                        break;
+//                    case 1:
+//                        i = new Intent(MainActivity.this, DownloadImgActivity.class);
+//                        break;
+
+                    default:
+                        break;
+                }
+
+
+                startActivity(i);
+
+            }
+        });
     }
 
 
