@@ -18,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String[] tuts = new String[] {"Post data"};
+        String[] tuts = new String[]{"Post data"};
         ArrayAdapter<String> adpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tuts);
         ListView lv = (ListView) findViewById(R.id.tutList);
 
@@ -32,7 +32,7 @@ public class MainActivity extends ActionBarActivity {
                                     long id) {
 
                 Intent i = null;
-                System.out.println("Position ["+position+"]");
+                System.out.println("Position [" + position + "]");
                 switch (position) {
                     case 0:
                         i = new Intent(MainActivity.this, PostActivity.class);

@@ -4,10 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HttpStack;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -56,9 +62,25 @@ public class PostActivity extends Activity {
     private void postData(final String param, final TextView tv) {
 
 
-        RequestQueue rq = Volley.newRequestQueue(this);
+//        HttpStack stack;
+//        RequestQueue rq = Volley.newRequestQueue(this);
 
-        StringRequest postReq = new StringRequest(Request.Method.POST, "http://requestb.in/1my5dv61", new Response.Listener<String>() {
+        RequestQueue rq;
+
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+
+        // Instantiate the RequestQueue with the cache and network.
+        rq = new RequestQueue(cache, network);
+
+        rq.start();
+
+        String url = "http://requestb.in/1my5dv61";
+
+        StringRequest postReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
@@ -96,6 +118,7 @@ public class PostActivity extends Activity {
             getActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
