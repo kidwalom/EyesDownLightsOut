@@ -1,7 +1,6 @@
 package com.hitheshreddivari.lahacks;
 
-import java.util.HashMap;
-import java.util.Map;
+import android.content.Context;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -12,23 +11,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HttpStack;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.support.v4.app.NavUtils;
-import android.annotation.TargetApi;
-import android.os.Build;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by harshsingh on 4/4/15.
@@ -59,9 +46,9 @@ public class PostActivity {
 
         rq.start();
 
-        String url = "http://requestb.in/1my5dv61";
-
-        StringRequest postReq = new StringRequest(Request.Method.POST, url, mResponseListener, new Response.ErrorListener() {
+        String url = "https://graph.api.smartthings.com/api/smartapps/installations/2eb26a77-078c-44d8-924f-b120b5ff5ec1/switch";
+//        String url = "http://requestb.in/18ltbmq1";
+        StringRequest postReq = new StringRequest(Request.Method.PUT, url, mResponseListener, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -74,7 +61,19 @@ public class PostActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
 
-                params.put("param1", param);
+                params.put("value", param);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer f2dac983-4f2f-4719-855f-c7a822ba11d2");
+//                params.put("Host", "graph.api.smartthings.com");
+//                params.put("Content-Length", "15");
+//                params.put("X-Target-URI", "https://graph.api.smartthings.com");
+//                params.put("Content-Type","text/plain; charset=UTF-8");
+//                params.put("Connection","Keep-Alive");
                 return params;
             }
 
