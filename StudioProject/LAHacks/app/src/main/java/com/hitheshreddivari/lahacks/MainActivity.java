@@ -1,57 +1,40 @@
 package com.hitheshreddivari.lahacks;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import com.android.volley.Response;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+    private PostActivity pa;
+    private Context mContext = this;
+    private TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_post);
+        pa = new PostActivity(mContext);
+        tv = (TextView)findViewById(R.id.respTxt);
+    }
 
-        String[] tuts = new String[]{"Post data"};
-        ArrayAdapter<String> adpt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tuts);
-        ListView lv = (ListView) findViewById(R.id.tutList);
-
-        lv.setAdapter(adpt);
-
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+    public void postData(View view){
+        pa.postData("0",new Response.Listener<String>(){
             @Override
-            public void onItemClick(AdapterView<?> adptView, View view, int position,
-                                    long id) {
-
-                Intent i = null;
-                System.out.println("Position [" + position + "]");
-                switch (position) {
-                    case 0:
-                        i = new Intent(MainActivity.this, PostActivity.class);
-                        break;
-//                    case 1:
-//                        i = new Intent(MainActivity.this, DownloadImgActivity.class);
-//                        break;
-
-                    default:
-                        break;
-                }
-
-
-                startActivity(i);
-
+            public void onResponse(String response){
+                tv.setText(response);
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

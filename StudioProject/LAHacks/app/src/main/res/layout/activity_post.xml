@@ -15,32 +15,15 @@
         android:layout_centerHorizontal="true"
         android:text="Volley post" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/titlePost"
-        android:text="Post data"
-        android:id="@+id/lbl"
-        android:layout_marginTop="25dp"/>
-
-    <EditText
-        android:id="@+id/paramEdt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/lbl"
-        android:hint="param"
-        android:layout_alignBottom="@id/lbl"/>
-
-
     <TextView android:id="@+id/respTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/paramEdt"
+        android:layout_below="@id/titlePost"
         />
 
     <Button android:id="@+id/postBtn"
         android:text="Post data"
+        android:onClick="postData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -17,6 +17,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -32,34 +33,14 @@ import android.os.Build;
 /**
  * Created by harshsingh on 4/4/15.
  */
-public class PostActivity extends Activity {
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
-        // Show the Up button in the action bar.
-//        setupActionBar();
+public class PostActivity {
+    private Context mContext;
 
-        // Start here posting data to remote server
-
-
-        final EditText eT = (EditText) findViewById(R.id.paramEdt);
-        final TextView tv = (TextView) findViewById(R.id.respTxt);
-
-        Button btn = (Button) findViewById(R.id.postBtn);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                String param = eT.getText().toString();
-                postData(param, tv);
-            }
-        });
-
+    public PostActivity(Context mContext) {
+        this.mContext=mContext;
     }
 
-    private void postData(final String param, final TextView tv) {
+    public void postData(final String param, Response.Listener<String> mResponseListener) {
 
 
 //        HttpStack stack;
@@ -68,7 +49,7 @@ public class PostActivity extends Activity {
         RequestQueue rq;
 
         // Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        Cache cache = new DiskBasedCache(mContext.getCacheDir(), 1024 * 1024); // 1MB cap
 
         // Set up the network to use HttpURLConnection as the HTTP client.
         Network network = new BasicNetwork(new HurlStack());
@@ -80,13 +61,7 @@ public class PostActivity extends Activity {
 
         String url = "http://requestb.in/1my5dv61";
 
-        StringRequest postReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                tv.setText(response); // We set the response data in the TextView
-            }
-        }, new Response.ErrorListener() {
+        StringRequest postReq = new StringRequest(Request.Method.POST, url, mResponseListener, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -109,38 +84,4 @@ public class PostActivity extends Activity {
 
     }
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupActionBar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_post, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // This ID represents the Home or Up button. In the case of this
-                // activity, the Up button is shown. Use NavUtils to allow users
-                // to navigate up one level in the application structure. For
-                // more details, see the Navigation pattern on Android Design:
-                //
-                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-                //
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
