@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 				double data=msg.arg1;
 				rawData[rawDataIndex]=data;
 				try {
-					writer.write(Double.toString(data)+","+eye_state+"\n");
+					writer.write(Double.toString(data)+"\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -179,9 +179,9 @@ public class MainActivity extends Activity {
     	boolean on = ((ToggleButton) view).isChecked();
         
         if (on) {
-            eye_state = 1;
+            // Enable vibrate
         } else {
-            eye_state = 0;
+            // Disable vibrate
         }
     }
 }

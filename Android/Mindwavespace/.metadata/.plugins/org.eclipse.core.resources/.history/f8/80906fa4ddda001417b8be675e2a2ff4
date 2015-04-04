@@ -23,9 +23,5 @@
         android:onClick="disconnectClick"
         android:text="Disconnect">
     </Button>
-    <ToggleButton 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="eyeState"/>
 
 </LinearLayout>

@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.ToggleButton;
 
 import com.neurosky.thinkgear.TGDevice;
 import com.neurosky.thinkgear.TGEegPower;
@@ -33,7 +32,6 @@ public class MainActivity extends Activity {
 	private double[] re=new double[512];
 	private double[] im=new double[512];
 	private boolean writable=false;
-	private int eye_state = 0;
 	private File file=null;
 	private BufferedWriter writer=null;
 	private String fileName="default.csv"; 
@@ -75,7 +73,7 @@ public class MainActivity extends Activity {
 				double data=msg.arg1;
 				rawData[rawDataIndex]=data;
 				try {
-					writer.write(Double.toString(data)+","+eye_state+"\n");
+					writer.write(Double.toString(data)+"\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -99,7 +97,7 @@ public class MainActivity extends Activity {
 					pow=pow+(re[j]*re[j]+im[j]*im[j])/512;
 				}
 				TGEegPower ep = (TGEegPower) msg.obj;
-				double beta_pow= ep.highAlpha;
+				double beta_pow= ep.highBeta;
 				Log.d("beta_ratio",""+pow);
 				break;
 				
@@ -174,14 +172,5 @@ public class MainActivity extends Activity {
             return true;
         }
         return false;
-    }
-    public void eyeState(View view){
-    	boolean on = ((ToggleButton) view).isChecked();
-        
-        if (on) {
-            eye_state = 1;
-        } else {
-            eye_state = 0;
-        }
     }
 }

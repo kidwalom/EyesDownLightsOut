@@ -14,12 +14,12 @@
 		<item value="org.eclipse.rcp:4.2.2.v20130129-152330-7IARAABrMQkGSvMgQnUlz-DQz00h"/>
 		<item value="org.python.pydev.feature:3.9.2.201502050007"/>
 	</list>
-	<section name="ChooseWorkspaceDialogSettings">
-		<item value="225" key="DIALOG_Y_ORIGIN"/>
-		<item value="345" key="DIALOG_X_ORIGIN"/>
-	</section>
 	<section name="WORKBENCH_SETTINGS">
 		<list key="ENABLED_TRANSFERS">
 		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item value="225" key="DIALOG_Y_ORIGIN"/>
+		<item value="345" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

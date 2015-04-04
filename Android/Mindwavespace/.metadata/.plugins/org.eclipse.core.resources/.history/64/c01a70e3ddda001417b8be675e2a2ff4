@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.widget.ToggleButton;
 
 import com.neurosky.thinkgear.TGDevice;
 import com.neurosky.thinkgear.TGEegPower;
@@ -75,7 +74,7 @@ public class MainActivity extends Activity {
 				double data=msg.arg1;
 				rawData[rawDataIndex]=data;
 				try {
-					writer.write(Double.toString(data)+","+eye_state+"\n");
+					writer.write(Double.toString(data)+"\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -174,14 +173,5 @@ public class MainActivity extends Activity {
             return true;
         }
         return false;
-    }
-    public void eyeState(View view){
-    	boolean on = ((ToggleButton) view).isChecked();
-        
-        if (on) {
-            eye_state = 1;
-        } else {
-            eye_state = 0;
-        }
     }
 }
