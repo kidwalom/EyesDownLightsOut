@@ -1,6 +1,7 @@
 package com.hitheshreddivari.lahacks;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
@@ -14,7 +15,11 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -57,12 +62,35 @@ public class PostActivity {
             }
         }) {
 
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<String, String>();
+//                JSONObject data = new JSONObject();
+//                params.put("value", param);
+//                Iterator iter = params.entrySet().iterator();
+//                while (iter.hasNext())
+//                {
+//                    Map.Entry pairs = (Map.Entry)iter.next();
+//                    try {
+//                        data.put((String)pairs.getKey(), (String)pairs.getValue());
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                return params;
+//            }
 
-                params.put("value", param);
-                return params;
+            @Override
+            public byte[] getBody() throws AuthFailureError{
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("value",param );
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("DATA ", data.toString());
+                return data.toString().getBytes();
             }
 
             @Override
