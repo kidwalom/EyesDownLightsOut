@@ -11,41 +11,63 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name of App"
-        android:layout_centerHorizontal="true"
+        android:text="Phocus"
         android:id="@+id/textView2"
         android:textColor="#ff0100ff"
         android:textColorHighlight="#fffffafa"
         android:textIsSelectable="false"
         android:textSize="40dp"
-        android:textColorLink="#fff7fff9" />
+        android:textColorLink="#fff7fff9"
+        android:layout_centerHorizontal="true"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:src="@drawable/logo"
+        android:background="#00ffffff"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/textView2" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linear"
-        android:layout_above="@+id/button">
-
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/imageView"
-            android:layout_gravity="center"
-            android:src="@drawable/logo" />
-    </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
         android:layout_gravity="bottom"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/button"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout">
 
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/button1"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/on"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/button2"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/setting"/>
+
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/button3"
+            android:layout_weight="1"
+
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/sync"/>
+    </LinearLayout>
 
 </RelativeLayout>
