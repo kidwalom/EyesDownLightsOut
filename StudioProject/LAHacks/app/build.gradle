@@ -24,4 +24,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile project(':volley')
     compile files('libs/ThinkGear.jar')
+    compile 'com.getpebble:pebblekit:3.0.0'
+}
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/groups/public/" }
 }

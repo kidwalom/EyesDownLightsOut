@@ -27,6 +27,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -43,7 +45,17 @@ public class MainActivity extends ActionBarActivity {
     private int eye_state = 0;
     private File file=null;
     private BufferedWriter writer=null;
+    private boolean pebble_flag=false;
     private String fileName="default.csv";
+    private Response.Listener rListener = new Response.Listener<String>(){
+        @Override
+        public void onResponse(String response){
+            tv.setText(response);
+        }
+    };
+    private boolean raw_close = false;
+    private Timer mTimer;
+    private PebbleMessenger mPebbleMessenger;
 
     private Handler handler=new Handler(){
         @Override
@@ -57,8 +69,10 @@ public class MainActivity extends ActionBarActivity {
                             break;
                         case TGDevice.STATE_CONNECTED:
                             tgDevice.start();
+                            tv.setText("connected");
                             break;
                         case TGDevice.STATE_DISCONNECTED:
+                            tv.setText("disconnected");
                             break;
                         case TGDevice.STATE_NOT_FOUND:
                             break;
@@ -72,6 +86,7 @@ public class MainActivity extends ActionBarActivity {
                     if (rawDataIndex==512){
                         rawDataIndex=0;
                         re = rawData;
+
                         for (int i=0;i<512;i++){
                             im[i]=0;
                             re[i]=re[i]*window[i];
@@ -80,9 +95,12 @@ public class MainActivity extends ActionBarActivity {
                         Log.d("fft", "done");
                     }
                     double data=msg.arg1;
+                    if (data>200){
+                        raw_close=true;
+                    }
                     rawData[rawDataIndex]=data;
                     try {
-                        writer.write(Double.toString(data)+","+eye_state+"\n");
+                        writer.write(Double.toString(data)+"\n");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -90,11 +108,30 @@ public class MainActivity extends ActionBarActivity {
                     break;
                 case TGDevice.MSG_ATTENTION:
                     Log.d("attention",""+msg.arg1);
-                    if (msg.arg1<30){
-                        // TODO Send message to pebble
+                    if (msg.arg1<30 && msg.arg1!=0){
+                        if(!pebble_flag){
+                            mPebbleMessenger.sendAlert();
+                            pebble_flag=true;
+                            mTimer.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    pebble_flag=false;
+                                }
+                            },10000);
+                        }
+
                     }
                     break;
                 case TGDevice.MSG_BLINK:
+                    int blink = msg.arg1;
+                    Log.d("blink",""+blink);
+                    if(eye_state==0 && blink>50){
+                        eye_state=1;
+                        pa.postData("on",rListener);
+                    }else if(eye_state==1 && blink>50){
+                        eye_state=0;
+                        pa.postData("off",rListener);
+                    }
                     break;
                 case TGDevice.MSG_EEG_POWER:
                     double pow=0;
@@ -132,6 +169,8 @@ public class MainActivity extends ActionBarActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        mTimer=new Timer();
+        mPebbleMessenger=new PebbleMessenger(mContext);
     }
 
     public void postData(View view){
@@ -143,14 +182,17 @@ public class MainActivity extends ActionBarActivity {
             value="off";
         }
         Log.d("value",""+value);
-        pa.postData(value,new Response.Listener<String>(){
-            @Override
-            public void onResponse(String response){
-                tv.setText(response);
-            }
-        });
+        pa.postData(value,rListener);
     }
 
+    public void connectClick(View view){
+        if(tgDevice!=null){
+            tgDevice.connect(true);
+        }
+    }
+    public void disconnectClick(View view){
+        tgDevice.close();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -179,5 +221,18 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return false;
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        if (writer!=null){
+            try {
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d("destroy","destroyed");
+        tgDevice.close();
     }
 }
