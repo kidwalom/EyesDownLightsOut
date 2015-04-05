@@ -102,11 +102,8 @@ public class MainActivity extends Activity {
 				}
 				ep = (TGEegPower) msg.obj;
 				String lapow= Double.toString(ep.lowAlpha);
-				String hapow = Double.toString(ep.highAlpha);
-				String lbpow = Double.toString(ep.lowBeta);
-				String hbpow = Double.toString(ep.highBeta);
 				try {
-					writer.write(lapow+","+hapow+","+lbpow+","+hbpow+","+eye_state+"\n");
+					writer.write(Double.toString(lapow)+","+Double.toString(pow)+","+eye_state+"\n");
 					Log.d("written","yes");
 				} catch (IOException e) {
 					e.printStackTrace();

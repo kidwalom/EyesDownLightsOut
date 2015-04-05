@@ -12,7 +12,7 @@ import java.util.UUID;
  * Created by hitheshaum on 4/4/15.
  */
 public class PebbleMessenger {
-    private final static UUID PEBBLE_APP_UUID = UUID.fromString("3f3f8e3d-ffce-46ac-942d-c304a23dcfeb");
+    private final static UUID PEBBLE_APP_UUID = UUID.fromString("3afbfb13-0beb-47ad-ae8f-6f665e5d089c");
     public final static int PEBBLE_NOT_CONNECTED = 1;
     private Context mContext;
     public PebbleMessenger(Context mContext){

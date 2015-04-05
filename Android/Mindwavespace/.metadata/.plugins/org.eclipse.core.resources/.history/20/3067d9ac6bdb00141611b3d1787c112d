@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 				String lbpow = Double.toString(ep.lowBeta);
 				String hbpow = Double.toString(ep.highBeta);
 				try {
-					writer.write(lapow+","+hapow+","+lbpow+","+hbpow+","+eye_state+"\n");
+					writer.write(lapow+","+Double.toString(pow)+","+eye_state+"\n");
 					Log.d("written","yes");
 				} catch (IOException e) {
 					e.printStackTrace();

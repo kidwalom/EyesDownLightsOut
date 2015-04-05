@@ -235,4 +235,8 @@ public class MainActivity extends ActionBarActivity {
         Log.d("destroy","destroyed");
         tgDevice.close();
     }
+    public void sendAlert(View view){
+        mPebbleMessenger.sendAlert();
+
+    }
 }

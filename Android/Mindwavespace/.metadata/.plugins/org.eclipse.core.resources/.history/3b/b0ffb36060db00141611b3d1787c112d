@@ -15,7 +15,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ToggleButton;
 
 import com.neurosky.thinkgear.TGDevice;
@@ -101,13 +100,9 @@ public class MainActivity extends Activity {
 					pow=pow+(re[j]*re[j]+im[j]*im[j])/512;
 				}
 				ep = (TGEegPower) msg.obj;
-				String lapow= Double.toString(ep.lowAlpha);
-				String hapow = Double.toString(ep.highAlpha);
-				String lbpow = Double.toString(ep.lowBeta);
-				String hbpow = Double.toString(ep.highBeta);
+				double MWpow= ep.lowAlpha;
 				try {
-					writer.write(lapow+","+hapow+","+lbpow+","+hbpow+","+eye_state+"\n");
-					Log.d("written","yes");
+					writer.write(Double.toString(MWpow)+","+","+Double.toString(pow)+eye_state+"\n");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -123,7 +118,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         btAdapter= BluetoothAdapter.getDefaultAdapter();
         if(btAdapter!=null){
         	tgDevice=new TGDevice(btAdapter,handler);

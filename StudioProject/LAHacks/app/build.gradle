@@ -32,8 +32,3 @@ repositories {
     maven { url "https://oss.sonatype.org/content/groups/public/" }
 
 }
-
-repositories {
-    mavenCentral()
-    maven { url "https://oss.sonatype.org/content/groups/public/" }
-}
